@@ -1,85 +1,100 @@
 const Gameboard = () => {
-    let squares = ["", "", "",
-                   "", "", "",
-                   "", "", ""]
-    const addToBoard = (index, mark) => {
-      squares[index] = mark
-    }
-    return {squares, addToBoard}  
+  let squares = ["", "", "", "", "", "", "", "", ""]
+  const winConditions = [
+			[0, 1, 2],
+			[3, 4, 5],
+			[6, 7, 8],
+			[0, 3, 6],
+			[1, 4, 7],
+			[2, 5, 8],
+			[0, 4, 8],
+			[2, 4, 6],
+		]
+  const addToBoard = (index, mark) => {
+    squares[index] = mark
+  }
+  const clearBoard = () => {
+    squares.forEach((s, index) => {
+      squares[index] = ""
+    })
+  }
+  return {squares, winConditions, addToBoard, clearBoard}  
+}
+
+const Player = (name, mark) => {
+  const getName  = () => name
+  const getMark = () => mark
+  let score = 0
+  const addToScore = () => {
+    score++
+  }
+  const getScore = () => score
+  return {getName, getMark, addToScore, getScore}
+}
+
+function game(){
+  //initialize game
+  const board = Gameboard()
+  let player1 = Player("Player1", "X")
+  let player2 = Player("Player2", "O")
+  let player1Turn = true
+  
+  //dom elements
+  const gameStatus = document.querySelector(".gameStatus")
+  const startBtn = document.querySelector(".startBtn")
+  const domSquares = Array.from(document.querySelectorAll(".square"))
+  
+  startBtn.addEventListener("click", newGame)
+  domSquares.forEach(square => addEventListener("click", addMark))
+  
+  function renderBoard(){
+    board.squares.forEach((mark, index) => domSquares[index].innerHTML = mark)
   }
   
-  const player = () => {
-    //player obj
+  function checkForGameOver(player){
+    let mark = player.getMark()
+    board.winConditions.forEach(condition => {
+    if(board.squares[condition[0]] === mark && board.squares[condition[1]] === mark && board.squares[condition[2]] === mark){
+        gameOver(player)
+      }
+    })
   }
   
-  function game(){
-    //initialize board
-    let xTurn = true
-    const board = Gameboard()
-    const domSquares = Array.from(document.querySelectorAll(".square"))
-    domSquares.forEach(square => addEventListener("click", addMark))
-    
-    function renderBoard(){
-      board.squares.forEach((mark, index) => domSquares[index].innerHTML = mark)
-    }
-    
-    function checkForGameOver(){
-      //check top row
-      if(board.squares[0] === "X" && board.squares[1] === "X" && board.squares[2] === "X"){
-        console.log("Game Over!")
-      }
-      //check middle row
-      if(board.squares[3] === "X" && board.squares[4] === "X" && board.squares[5] === "X"){
-        console.log("Game Over!")
-      }
-      //check bottom row
-      if(board.squares[0] === "X" && board.squares[1] === "X" && board.squares[2] === "X"){
-        console.log("Game Over!")
-      }
-
-      //check left column
-      if(board.squares[0] === "X" && board.squares[3] === "X" && board.squares[6] === "X"){
-        console.log("Game Over!")
-      }
-      //check middle column
-      if(board.squares[1] === "X" && board.squares[4] === "X" && board.squares[7] === "X"){
-        console.log("Game Over!")
-      }
-      //check right column
-      if(board.squares[2] === "X" && board.squares[5] === "X" && board.squares[8] === "X"){
-        console.log("Game Over!")
-      }
-
-      //check diagonals
-      if(board.squares[0] === "X" && board.squares[4] === "X" && board.squares[8] === "X"){
-        console.log("Game Over!")
+  function addMark(e){
+    let player = player1Turn ? player1: player2
+    if(e.srcElement.innerHTML === ""){
+      let index = e.srcElement.dataset.indexNumber
+      board.addToBoard(index, player.getMark())
+      renderBoard()
+      
+      if(player1Turn){
+        player1Turn = false
+      }else{
+        player1Turn = true
       }
       
-      if(board.squares[2] === "X" && board.squares[4] === "X" && board.squares[6] === "X"){
-        console.log("Game Over!")
-      }
-      
+      gameStatus.innerHTML = `${player1Turn ? player1.getName() : player2.getName()}'s turn`
+      checkForGameOver(player)
     }
-    
-    function addMark(e){
-      let mark
-      if(e.srcElement.innerHTML === ""){
-        let index = e.srcElement.dataset.indexNumber
-        if(xTurn){
-          mark = "X"
-          xTurn = false
-        }else{
-          mark = "O"
-          xTurn = true
-        }
-        board.addToBoard(index, mark)
-        renderBoard()
-        checkForGameOver()
-      }
-    }
-    
+  }
+  
+  function gameOver(player){
+    gameStatus.innerHTML = `${player.getName()} wins!!`
+    domSquares.forEach(square => square.classList.toggle("unclickable"))
+    startBtn.style.visibility = "visible"
+  }
+  
+  function newGame(){
+    board.clearBoard()
+    player1Turn = true
+    domSquares.forEach(square => square.classList.toggle("unclickable"))
+    gameStatus.innerHTML = ""
+    startBtn.style.visibility = "hidden"
     renderBoard()
   }
   
-  game()
+  renderBoard()
+}
+
+game()
   
