@@ -37,7 +37,8 @@ function game(){
   const board = Gameboard()
   let player1 = Player("Player1", "X")
   let player2 = Player("Player2", "O")
-  let player1Turn = true
+  //let player1Turn = true
+  let activePlayer = player1
   
   //dom elements
   const gameStatus = document.querySelector(".gameStatus")
@@ -47,53 +48,48 @@ function game(){
   startBtn.addEventListener("click", newGame)
   domSquares.forEach(square => addEventListener("click", addMark))
   
-  function renderBoard(){
+  function updateBoard(){
     board.squares.forEach((mark, index) => domSquares[index].innerHTML = mark)
   }
   
-  function checkForGameOver(player){
-    let mark = player.getMark()
+  function checkForWin(){
+    let mark = activePlayer.getMark()
+    
+    //if player wins call game over.
     board.winConditions.forEach(condition => {
     if(board.squares[condition[0]] === mark && board.squares[condition[1]] === mark && board.squares[condition[2]] === mark){
-        gameOver(player)
+        gameOver()
       }
     })
   }
   
   function addMark(e){
-    let player = player1Turn ? player1: player2
     if(e.srcElement.innerHTML === ""){
       let index = e.srcElement.dataset.indexNumber
-      board.addToBoard(index, player.getMark())
-      renderBoard()
-      
-      if(player1Turn){
-        player1Turn = false
-      }else{
-        player1Turn = true
-      }
-      
-      gameStatus.innerHTML = `${player1Turn ? player1.getName() : player2.getName()}'s turn`
-      checkForGameOver(player)
+      board.addToBoard(index, activePlayer.getMark())
+      updateBoard()
+      checkForWin()
+      activePlayer = (activePlayer === player1) ? player2 : player1
+      gameStatus.innerHTML = `${activePlayer.getName()}'s turn`
     }
   }
   
-  function gameOver(player){
-    gameStatus.innerHTML = `${player.getName()} wins!!`
+  function gameOver(){
+    gameStatus.innerHTML = `${activePlayer.getName()} wins!!`
     domSquares.forEach(square => square.classList.toggle("unclickable"))
     startBtn.style.visibility = "visible"
   }
   
   function newGame(){
     board.clearBoard()
-    player1Turn = true
+    activePlayer = player1
     domSquares.forEach(square => square.classList.toggle("unclickable"))
     gameStatus.innerHTML = ""
     startBtn.style.visibility = "hidden"
-    renderBoard()
+    updateBoard()
   }
   
-  renderBoard()
+  updateBoard()
 }
 
 game()
