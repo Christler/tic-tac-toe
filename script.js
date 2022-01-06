@@ -43,12 +43,12 @@ const displayController = () => {
   return { player1Name, player2Name, player1Score, player2Score, gameStatus, startBtn, squares }
 }
 
-function game() {
+function game(player1Input, player2Input) {
   //initialize game
   const board = Gameboard()
   const display = displayController()
-  let player1 = Player("Bill", "X")
-  let player2 = Player("Ted", "O")
+  let player1 = Player(player1Input, "X")
+  let player2 = Player(player2Input, "O")
   let activePlayer = player1
 
   //add event listerners
@@ -127,4 +127,17 @@ function game() {
 
 }
 
-game()
+function modalController(){
+  //show modal on load
+  $('.modal').modal("show")
+  const player1Input = document.querySelector(".player1Input")
+  const player2Input = document.querySelector(".player2Input")
+  const startGame = document.querySelector(".startGame")
+
+  startGame.addEventListener("click", () => {
+    game(player1Input.value, player2Input.value)
+    $('.modal').modal("hide")
+  })
+}
+
+modalController()
