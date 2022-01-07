@@ -6,11 +6,35 @@ body{
   
 }
 
+.modal-content{
+  background-color: #181818 !important;
+}
+.modal-header{
+  background-color: #181818;
+  color: #c0ff30;
+  border: none !important;
+}
+
+.modal-body, .modal-footer{
+  display: flex;
+  justify-content: center !important;
+  background-color: #181818;
+  border: none !important;
+}
+
+.modal-body input{
+  background-color: #666;
+  color: #181818;
+  font-size: 24px;
+  margin: 20px;
+  border: none;
+}
+
 .title{
   color: #c0ff30;
   margin: 1em 0;
   text-align: center;
-  font-size: 4em;
+  font-size: 46px;
 }
 
 .main{
@@ -19,6 +43,7 @@ body{
 }
 
 .leftSide, .rightSide{
+  width: 25%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -60,14 +85,29 @@ body{
 .gameStatus{
   color: #c0ff30;
   text-align: center;
-  font-size: 24px;
+  font-size: 32px;
   padding: 20px;
+}
+
+.container{
+  display: flex;
+  justify-content: center;
+}
+
+.startBtn, .startGame{
+  background-color: #a818ff;
+  font-size: 32px !important;
+  transition: 0.2s;
 }
 
 .startBtn{
   visibility: hidden;
-  background-color: #a818ff;
-  font-size: 32px !important;
+}
+
+.startBtn:hover, .startGame:hover{
+  background-color: #181818;
+  color: #a818ff;
+  outline: 2px solid #a818ff;
 }
 
 .unclickable{
