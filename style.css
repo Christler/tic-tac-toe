@@ -1,5 +1,16 @@
-h1{
+@import url('https://fonts.googleapis.com/css2?family=Creepster&display=swap');
+
+body{
+  background-color: #181818 !important;
+  font-family: 'Creepster', cursive !important;
+  
+}
+
+.title{
+  color: #c0ff30;
+  margin: 1em 0;
   text-align: center;
+  font-size: 4em;
 }
 
 .main{
@@ -13,29 +24,41 @@ h1{
   justify-content: center;
   align-items: center;
   padding: 20px;
-  outline: 1px solid red;
 }
 
 .leftSide div, .rightSide div{
-  font-size: 26px;
+  font-size: 32px;
   padding: 20px;
+}
+
+.player1Name, .player2Name, .player1Score, .player2Score{
+  color: #ffa830;
+}
+
+.player1Mark, .player2Mark{
+  color: #a818ff;
+  font-size: 150px !important;
 }
 
 .gameContainer{
   display: grid;
-  grid-template-columns: 100px 100px 100px;
+  grid-template-columns: repeat(3, 150px);
+  grid-template-rows: repeat(3, 150px);
 }
 
 .square{
-  height: 100px;
-  border: 1px solid;
+  background-color: #666;
+  color: #181818;
+  margin: 2px;
+  /*border: 1px solid;*/
   text-align: center;
-  font-size: 100px;
+  font-size: 150px;
   cursor: pointer;
   line-height: 1;
 }
 
 .gameStatus{
+  color: #c0ff30;
   text-align: center;
   font-size: 24px;
   padding: 20px;
@@ -43,6 +66,8 @@ h1{
 
 .startBtn{
   visibility: hidden;
+  background-color: #a818ff;
+  font-size: 32px !important;
 }
 
 .unclickable{

@@ -10,8 +10,8 @@
     <title>Tic-Tac-Toe</title>
 </head>
 
-<body>
-    <div class="modal">
+<body onload="modalController()">
+    <div class="modal fade" data-backdrop="static">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -27,7 +27,7 @@
             </div>
         </div>  
     </div>
-    <h1>Tic-Tac-Toe</h1>
+    <h1 class="title">Tic-Tac-Toe</h1>
     <div class="main">
         <div class="leftSide">
             <div class="player1Name"></div>
@@ -35,15 +35,15 @@
             <div class="player1Score">Score: 0</div>
         </div>
         <div class="gameContainer">
-            <div class="square" data-index-number=0></div>
-            <div class="square" data-index-number=1></div>
-            <div class="square" data-index-number=2></div>
-            <div class="square" data-index-number=3></div>
-            <div class="square" data-index-number=4></div>
-            <div class="square" data-index-number=5></div>
-            <div class="square" data-index-number=6></div>
-            <div class="square" data-index-number=7></div>
-            <div class="square" data-index-number=8></div>
+            <div class="square rounded" data-index-number=0></div>
+            <div class="square rounded" data-index-number=1></div>
+            <div class="square rounded" data-index-number=2></div>
+            <div class="square rounded" data-index-number=3></div>
+            <div class="square rounded" data-index-number=4></div>
+            <div class="square rounded" data-index-number=5></div>
+            <div class="square rounded" data-index-number=6></div>
+            <div class="square rounded" data-index-number=7></div>
+            <div class="square rounded" data-index-number=8></div>
         </div>
         <div class="rightSide">
             <div class="player2Name"></div>
@@ -52,7 +52,9 @@
         </div>
     </div>
     <div class="gameStatus"></div>
-    <button class="startBtn">New Game</button>
+    <div class="container">
+        <button class="startBtn btn">New Game</button>
+    </div>
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>

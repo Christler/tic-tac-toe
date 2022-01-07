@@ -139,5 +139,3 @@ function modalController(){
     $('.modal').modal("hide")
   })
 }
-
-modalController()
